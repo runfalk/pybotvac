@@ -1,10 +1,6 @@
 import itertools
 
 
-class CapabilityError(RuntimeError):
-    pass
-
-
 class CapabilityProxy(object):
     def __init__(self, obj, capabilities, handler):
         self.obj = obj
@@ -83,8 +79,11 @@ _general_cleaning = list(itertools.product(
 class RobotRemote(object):
     capability_dispatcher = CapabilityDispatcher()
 
-    def __init__(self, capabilities):
+    def __init__(self, capabilities=None):
         self.counter = itertools.count()
+
+        if capabilities is None:
+            capabilities = {}
         self.capabilities = capabilities
 
     @capability_dispatcher.simple("findMe", "basic-1")

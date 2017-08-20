@@ -56,16 +56,18 @@ class Nucleo(object):
         data.update(msg)
 
         url = "https://nucleo.neatocloud.com:4443/vendors/neato/robots/{serial}/messages"
-        return self.session.post(
+        req = self.session.post(
             url.format(serial=self.session.auth.serial),
             json=data)
+        return req.json()
 
 
 class Beehive(OAuth2Session):
     def __init__(
             self, client_id=None, client=None, auto_refresh_url=None,
-            auto_refresh_kwargs=None, scope=None, redirect_uri=None, token=None,
-            state=None, token_updater=None, client_secret=None, **kwargs):
+            auto_refresh_kwargs=None, scope=None, redirect_uri=None,
+            token=None, state=None, token_updater=None, client_secret=None,
+            **kwargs):
         if client_secret is None:
             raise ValueError("No client secret provided")
         self.client_secret = client_secret
